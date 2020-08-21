@@ -1,0 +1,52 @@
+﻿1. Run fastqc on all samples
+   1. run_fastqc.job
+2. To view on home computer, download html files locally 
+3. Trim reads based on fastqc results
+   1. run_trimmer.py
+4. Compress original fastq files
+   1. No script, just do: 
+      1. for i in *.fastq; do gzip ${i%fastq}fastq.gz $i; done
+5.  Quality filter trimmed reads 
+   1. run_qualfilter.job
+6. Get the reference genome and index it
+   1. bwa_index.sh
+   2. gatk_dict.sh
+   3. samtools_faidx.sh
+7. BWA  mem on the filtered fastq files (twice due to computing constraints)
+   1. run_bwa_mem.sh
+   2. run_bwa_mem2.sh
+8. Samtools view 
+   1. samtools-view.sh
+9.   If you mapped single end and paired end data separately in bwa, merge them now
+   1. run_merge.job
+10.   Add readgroups and sort bam
+   1. picard_sort_tmp.sh
+11.  Mark PCR duplicates 
+   1. run_pcrdup.job
+12. Index sorted, duplicate-filtered bam 
+   1. samtools_index.job
+13. GATK HaplotypeCaller
+   1. HaploCaller3.sh
+14.  select only SNPs & MNPs that are multi-allelic
+   1. run-SNPMNP.job
+15. quality filter based on global & per-genotype criteria
+   1. VariantFiltration.sh
+16.  and now remove flagged variants 
+   1. SelectFilteredVariants.sh
+17. Vcf-stats
+   1. vcf_SNPdensity.sh
+   2. vcf_missing-indv.sh
+   3. vcf_filter-test.sh
+   4. vcf_filtersum.sh
+   5. vcf_nomissing.sh
+   6. Vcfstats.sh
+   7. Vcf_het.sh
+   8. vcf_missing-sites.sh
+   9. vcf_nomissing.sh
+   10. vcf_sites.sh
+   11. vcf_TsTv.sh
+18. BaitsTools 
+   1. BaitsTools60000.sh
+   2. BaitsTools20000.sh
+   3. BaitsToolsEvery.sh
+
