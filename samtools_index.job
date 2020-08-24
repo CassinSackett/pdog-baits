@@ -1,0 +1,11 @@
+#!/bin/bash
+#PBS -q single
+#PBS -l nodes=1:ppn=1
+#PBS -l walltime=35:00:00
+#PBS -o samtools-index_output
+#PBS -N samtools-index
+#PBS -A loni_gupd_redos
+
+module load samtools/0.1.19/INTEL-14.0.2
+
+for i in /work/sydnij/*.rmdup.bam; do samtools index $i; done
