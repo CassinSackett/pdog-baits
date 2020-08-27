@@ -1,9 +1,0 @@
-#!/bin/bash
-#PBS -q single
-#PBS -l nodes=1:ppn=1
-#PBS -l walltime=2:00:00
-#PBS -A loni_gupd_redos
-#PBS -o fastqc-test_output
-#PBS -N fastqc-test_011919
-
-for i in /project/sackettl/CT2CC10_S9_L1278_R2.fastq; do /project/sackettl/FastQC/fastqc $i; done
